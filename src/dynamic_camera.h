@@ -59,7 +59,25 @@ struct DynamicCamera {
         lookaheadState = (1-alpha) * lookaheadState + alpha * lookAheadTarget;
         camera.setCameraCenter(cameraUnadjustedCenter);
         sf::Vector2f playerPercent = camera.worldToWindowPercent(trackedPosWorld);
-        
+
+        if(playerPercent.x < deadZoneX.min){
+            float lineWorldX = camera.windowPercentToWorld({deadZoneX.min, playerPercent.y}).x;
+            camera.translateWorld({alpha * (trackedPosWorld.x - lineWorldX), 0.f});
+        } else if(playerPercent.x > deadZoneX.max){
+            float lineWorldX = camera.windowPercentToWorld({deadZoneX.max, playerPercent.y}).x;
+            camera.translateWorld({alpha*(trackedPosWorld.x - lineWorldX), 0.f});
+        }
+
+        playerPercent = camera.worldToWindowPercent(trackedPosWorld);
+
+        if(playerPercent.x < softZoneX.min){
+            camera.setCameraPercent(trackedPosWorld, {softZoneX.min, playerPercent.y});
+        } else if(playerPercent.x > softZoneX.max){
+            camera.setCameraPercent(trackedPosWorld, {softZoneX.max, playerPercent.y});
+        }
+
+        cameraUnadjustedCenter =  camera.getCameraCenter();
+        camera.setCameraCenter({cameraUnadjustedCenter.x + lookaheadState, cameraUnadjustedCenter.y});
 
     }
 
