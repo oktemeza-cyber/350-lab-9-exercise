@@ -133,8 +133,10 @@ int main() {
             player.velocity.y += GRAVITY;
         }
         player.update();
+
         // camera
         dynamicCam.update(camera, player.position, player.velocity);
+
         // update gui
         leftSoftLine.setPosition({windowSize.x * dynamicCam.deadZoneX.min, 0.f});
         leftHardLine.setPosition({windowSize.x * dynamicCam.softZoneX.min, 0.f});
@@ -156,6 +158,7 @@ int main() {
         window.draw(rightHardLine);
         // display to screen
         window.display();
+        
     }
     return 0;
 }
