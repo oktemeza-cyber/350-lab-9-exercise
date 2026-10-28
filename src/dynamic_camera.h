@@ -65,7 +65,7 @@ struct DynamicCamera {
         } else if(playerPercent.x > softZoneX.max){
             camera.setCameraPercent(trackedPosWorld, {softZoneX.max, playerPercent.y});
         }
-
+        //almost 1 to 1 with prep, just with changed variables in softZoneX and deadZoneX, and trackedPosWorld
         cameraUnadjustedCenter =  camera.getCameraCenter();
         camera.setCameraCenter({cameraUnadjustedCenter.x + lookaheadState, cameraUnadjustedCenter.y});
 
